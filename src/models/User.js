@@ -46,7 +46,10 @@ const userSchema = mongoose.Schema({
             type: String,
             required: true
         }
-    }]
+    }],
+    dashboard: {
+        type: String
+    }
 })
 
 userSchema.pre('save', async function (next) {

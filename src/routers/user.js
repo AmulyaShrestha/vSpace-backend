@@ -16,13 +16,24 @@ router.post('/users', async (req, res) => {
     }
 })
 
-router.post('/users/login', async(req, res) => {
+router.put('/users/update', auth, async (req, res) => {
+    try {
+        const user = new User(req.body);
+        await User.findByIdAndUpdate(req.body._id, user);
+        res.status(201).send(user)
+    } catch (error) {
+        res.status(400).send(error);
+        console.log(error);
+    }
+})
+
+router.post('/users/login', async (req, res) => {
     //Login a registered user
     try {
         const { email, password } = req.body
         const user = await User.findByCredentials(email, password)
         if (!user) {
-            return res.status(401).send({error: 'Login failed! Check authentication credentials'})
+            return res.status(401).send({ error: 'Login failed! Check authentication credentials' })
         }
         const token = await user.generateAuthToken()
         res.send({ user, token })
@@ -32,7 +43,7 @@ router.post('/users/login', async(req, res) => {
 
 })
 
-router.get('/users/me', auth, async(req, res) => {
+router.get('/users/me', auth, async (req, res) => {
     // View logged in user profile
     res.send(req.user)
 })
@@ -50,7 +61,7 @@ router.post('/users/me/logout', auth, async (req, res) => {
     }
 })
 
-router.post('/users/me/logoutall', auth, async(req, res) => {
+router.post('/users/me/logoutall', auth, async (req, res) => {
     // Log user out of all devices
     try {
         req.user.tokens.splice(0, req.user.tokens.length)
