@@ -1,6 +1,8 @@
-const express = require('express')
-const User = require('../models/User')
-const auth = require('../middleware/auth')
+const express = require('express');
+const User = require('../models/User');
+const auth = require('../middleware/auth');
+const NumberUtility = require('../utils/NumberUtility');
+const mailSender = require('../utils/mail-sender-utility');
 
 const router = express.Router()
 
@@ -47,6 +49,50 @@ router.get('/users/me', auth, async (req, res) => {
     // View logged in user profile
     res.send(req.user)
 })
+
+router.get(`/users/reset-password/:email`, async (req, res) => {
+    try {
+        const email = req.params.email;
+        const user = await User.findOne({ email: email });
+        if (!user) {
+            return res.status(400).send({ error: "User not found!" });
+        }
+        const token = NumberUtility.generateRandom(1000, 9999);
+        user.passResetToken = token;
+        await user.save();
+        // send mail with reset token.
+        mailSender.sendEmail(
+            email,
+            "Reset Password",
+            token
+        );
+        res.send();
+    } catch (error) {
+        console.error(error);
+        res.status(400).send(error);
+    }
+});
+
+router.post(`/users/reset-password`, async (req, res) => {
+    try {
+        const email = req.body.email;
+        const token = req.body.passResetToken;
+        const password = req.body.password;
+
+        const user = await User.findOne({ email: email });
+        if (user.passResetToken !== token) {
+            return res.status(401).send({ error: "Token did not match" });
+        }
+
+        user.passResetToken = null;
+        user.password = password;
+        await user.save();
+        res.send({ message: 'successfully updated password!' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(error);
+    }
+});
 
 router.post('/users/me/logout', auth, async (req, res) => {
     // Log user out of the application
