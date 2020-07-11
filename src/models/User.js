@@ -41,6 +41,9 @@ const userSchema = mongoose.Schema({
         required: true,
         minLength: 7
     },
+    passResetToken: {
+        type: String
+    },
     tokens: [{
         token: {
             type: String,
