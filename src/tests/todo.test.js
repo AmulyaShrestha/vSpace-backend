@@ -32,6 +32,59 @@ describe('Todo Schema save testing', () => {
             });
     });
 
+
+    /**
+     * Mark as completed or incomplete To-Dos --
+     * **/
+    it('Mark as completed or incomplete To-Dos', async () => {
+
+        const mockDoneStatus = false;
+
+        const newToDo = {
+            title: 'test Title',
+            doneStatus: mockDoneStatus,
+            content: 'test Content Content Content'
+        };
+        const existingToDo = new Todo(newToDo);
+        await existingToDo.save()
+
+        /**
+         * @example Checked or done status should be opposite to mock done status
+         * -- (mockDoneStatus === !mockDoneStatus) --
+         * **/
+        await Todo.findOneAndUpdate({_id: existingToDo._id},
+            {$set: {doneStatus: !mockDoneStatus}},
+            {new: true},
+            (error, doc) => {
+                return expect(doc.doneStatus).toEqual(!mockDoneStatus)
+            })
+    });
+
+
+    /**
+     * Update To-Dos Title testing--
+     * **/
+    it('Update To-Dos Title testing', async () => {
+
+        const updatedTitle = 'mock updated title'
+
+        const newToDo = {
+            title: 'test Title',
+            doneStatus: false,
+            content: 'test Content Content Content'
+        };
+        const existingToDo = new Todo(newToDo);
+        await existingToDo.save()
+
+        await Todo.findOneAndUpdate({_id: existingToDo._id},
+            {$set: {title: updatedTitle}},
+            {new: true},
+            (error, doc) => {
+                return expect(doc.title).toEqual(updatedTitle)
+            })
+    });
+
+
     /**
      * Delete entire document within a collection Testing --
      * **/

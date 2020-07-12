@@ -52,7 +52,6 @@ describe('Note Schema save testing', () => {
             (error, doc) => {
                 return expect(doc.title).toEqual('title')
             })
-
     }); */
 
 
