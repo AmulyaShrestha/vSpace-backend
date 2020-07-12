@@ -11,6 +11,10 @@ const noteSchema = mongoose.Schema({
             required: true,
             trim: true
         },
+        doneStatus: {
+            type: Boolean,
+            trim: true
+        },
         _reference: {
             type: String
         },
