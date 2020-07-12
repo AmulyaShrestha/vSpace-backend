@@ -4,12 +4,11 @@ const hbs = require("nodemailer-express-handlebars");
 module.exports = {
     sendEmail: (toUser, subject, token) => {
         let transporter = nodeMailer.createTransport({
-            host: "smtp.gmail.com",
-            port: 465,
-            secure: true,
+            service: 'Gmail',
+            subject: 'Password reset',
             auth: {
-                user: 'ancedre1@gmail.com',
-                pass: 'mynameisancedre'
+                user: 'a2s3dteams@gmail.com',
+                pass: 'a2s3dteams'
             }
         });
 
