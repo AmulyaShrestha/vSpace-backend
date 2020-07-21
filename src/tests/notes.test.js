@@ -43,16 +43,25 @@ describe('Note Schema save testing', () => {
     /**
      * Update Testing --
      * **/
-    /* it('Update notes testing', async () => {
+    it('Update sticky notes testing', async () => {
 
-        const existingNoteId = '5e392e2f86c7f747c099ec3b';
-        await Note.findOneAndUpdate({ _id: existingNoteId },
-            { $set: { title: 'title' } },
+        const updatedTitle = 'mock updated title',
+        const updatedContent = 'mock updated content content',
+
+        const stickyNote = {
+            title: 'test Title',
+            content: 'test Content Content Content'
+        };
+        const existingStickyNote = new Note(stickyNote);
+        await existingStickyNote.save()
+
+        await Note.findOneAndUpdate({ _id: existingStickyNote._id },
+            { $set: { title: updatedTitle } },
             { new: true },
             (error, doc) => {
-                return expect(doc.title).toEqual('title')
+                return expect(doc.title).toEqual(updatedTitle)
             })
-    }); */
+    });
 
 
 });
