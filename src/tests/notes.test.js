@@ -33,20 +33,12 @@ describe('Note Schema save testing', () => {
     });
 
     /**
-     * Delete entire document within a collection Testing --
-     * **/
-    it('Delete notes testing', async () => {
-        const status = await Note.deleteMany();
-        expect(status.ok).toBe(1);
-    });
-
-    /**
      * Update Testing --
      * **/
     it('Update sticky notes testing', async () => {
 
-        const updatedTitle = 'mock updated title',
-        const updatedContent = 'mock updated content content',
+        const updatedTitle = 'mock updated title';
+        const updatedContent = 'mock updated content content';
 
         const stickyNote = {
             title: 'test Title',
@@ -63,5 +55,11 @@ describe('Note Schema save testing', () => {
             })
     });
 
-
+    /**
+     * Delete entire document within a collection Testing --
+     * **/
+    it('Delete notes testing', async () => {
+        const status = await Note.deleteMany();
+        expect(status.ok).toBe(1);
+    });
 });
