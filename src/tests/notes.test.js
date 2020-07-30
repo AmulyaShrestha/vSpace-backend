@@ -42,7 +42,7 @@ describe('Note Schema save testing', () => {
 
         const stickyNote = {
             title: 'test Title',
-            content: 'test Content Content Content'
+            content: 'test Content Content Content content end'
         };
         const existingStickyNote = new Note(stickyNote);
         await existingStickyNote.save()
