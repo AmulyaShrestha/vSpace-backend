@@ -56,7 +56,7 @@ describe('Note Schema save testing', () => {
     });
 
     /**
-     * Delete entire document within a collection Testing --
+     * Bulk delete widgets Testing --
      * **/
     it('Delete notes testing', async () => {
         const status = await Note.deleteMany();
