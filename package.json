@@ -20,7 +20,7 @@
     "mongoose": "^5.9.21",
     "nodemailer": "^6.4.2",
     "nodemailer-express-handlebars": "^4.0.0",
-    "validator": "^13.1.1"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "env-cmd": "^10.1.0",
